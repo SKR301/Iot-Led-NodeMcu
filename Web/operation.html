@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	<meta content="utf-8" http-equiv="encoding">
+	<link rel="stylesheet" type="text/css" href="css/css.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+	<!-- header -->
+		<h1 class="display-1" style="background-color: #00cee5; height: 300px;">D-440Led</h1>
+
+	<!-- main -->
+	<center>
+	<div class="main">
+		<h3 class="display-4" id="status_txt">Status: Loading...</h3>
+		<button type="button" id="ctrl_btn" onclick="on_btn()" class="btn btn-success btn-lg mt-5">On</button>
+		<br>
+		<button type="button" id="ctrl_btn" onclick="off_btn()" class="btn btn-danger btn-lg mt-5">OFF</button>
+	</div>
+	</center>
+
+
+</body>
+
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-database.js"></script>
+<script src="js/conn.js"></script>
+<script type="text/javascript">
+window.onload=function()
+{
+	var status_txt=document.getElementById('status_txt');
+	firebase.database().ref('LED').once('value').then(function(snapshot){
+		status_txt.innerHTML="Status: "+snapshot.child('status').val();
+	});
+}
+
+function on_btn()
+{
+	firebase.database().ref('LED').child('status').set("On");
+	window.location.reload();
+}
+
+function off_btn()
+{
+	firebase.database().ref('LED').child('status').set("Off");
+	window.location.reload();
+}
+</script>
+</html>

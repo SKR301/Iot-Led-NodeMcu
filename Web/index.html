@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	<meta content="utf-8" http-equiv="encoding">
+	<link rel="stylesheet" type="text/css" href="css/css.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+	<!-- header -->
+	<div class="header">
+		<h1 class="display-1">D-440Led</h1>
+	</div>
+
+	<!-- sidebar -->
+	<div class="sidebar">
+		<a class="links" href="admin.html">Admin</a>
+	</div>
+
+	<!-- main -->
+	<div class="form">
+		<!-- alert -->
+		<div class="alert alert-danger" role="alert" id="alert_msg">
+			Wrong Pin Entered!!!
+		</div>
+
+		<!-- form -->
+		<fieldset>
+			<input type="password" class="form-control" id="pin_txt" placeholder="PIN . . .">
+			<br>
+			<button type="button" id="submit_btn" onclick="submit()" class="btn btn-primary">Submit</button>
+		</fieldset>
+	</div>
+
+</body>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-database.js"></script>
+<script src="js/conn.js"></script>
+
+<script type="text/javascript">
+function submit()
+{
+	var pin_txt=document.getElementById('pin_txt').value;
+	firebase.database().ref('LED').once('value').then(function(snapshot){
+		if(snapshot.child('key').val()==pin_txt)
+		{
+			window.location.href="operation.html";
+		}
+		else
+		{
+			document.getElementById("alert_msg").style.display="block";
+		}
+	});
+}
+</script>
+</html>
